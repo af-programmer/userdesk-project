@@ -2,7 +2,7 @@ const postsDAL = require('../dal/posts.dal');
 
 exports.getAllPosts = async (req, res) => {
   try {
-    const posts = await postsDAL.getAllPosts();
+    const posts = await postsDAL.getAllPosts(req.query.include === 'comments');
     res.json(posts);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -22,6 +22,7 @@ exports.getPostById = async (req, res) => {
 exports.createPost = async (req, res) => {
   try {
     const { title, content } = req.body;
+    if (!title) return res.status(400).json({ error: 'Title is required' });
     const postId = await postsDAL.createPost({ user_id: req.user.id, title, content });
     res.status(201).json({ id: postId, message: 'Post created successfully' });
   } catch (error) {

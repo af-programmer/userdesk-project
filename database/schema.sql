@@ -1,12 +1,10 @@
--- Users table
 CREATE TABLE users (
   id INT PRIMARY KEY AUTO_INCREMENT,
   username VARCHAR(50) UNIQUE NOT NULL,
-  email VARCHAR(100) UNIQUE NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+  email VARCHAR(255) UNIQUE NOT NULL,
+  phone VARCHAR (20) UNIQUE
+  );
 
--- Passwords table (restricted access)
 CREATE TABLE passwords (
   id INT PRIMARY KEY AUTO_INCREMENT,
   user_id INT UNIQUE NOT NULL,
@@ -14,7 +12,6 @@ CREATE TABLE passwords (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Todos table
 CREATE TABLE todos (
   id INT PRIMARY KEY AUTO_INCREMENT,
   user_id INT NOT NULL,
@@ -24,7 +21,7 @@ CREATE TABLE todos (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Posts table
+
 CREATE TABLE posts (
   id INT PRIMARY KEY AUTO_INCREMENT,
   user_id INT NOT NULL,
@@ -34,7 +31,7 @@ CREATE TABLE posts (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Comments table
+
 CREATE TABLE comments (
   id INT PRIMARY KEY AUTO_INCREMENT,
   post_id INT NOT NULL,

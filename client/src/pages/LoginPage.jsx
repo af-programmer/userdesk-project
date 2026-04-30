@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/api';
+import { useAuth } from '../hooks/useAuth';
 
 function LoginPage() {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,7 +16,8 @@ function LoginPage() {
       const data = await login(formData);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
-      navigate('/app');
+      setUser(data.user);
+      navigate(`/users/${data.user.username}/app`);
     } catch {
       setError('Invalid username or password');
     }

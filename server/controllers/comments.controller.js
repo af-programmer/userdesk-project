@@ -12,6 +12,7 @@ exports.getCommentsByPost = async (req, res) => {
 exports.createComment = async (req, res) => {
   try {
     const { post_id, content } = req.body;
+    if (!content || !post_id) return res.status(400).json({ error: 'content and post_id are required' });
     const commentId = await commentsDAL.createComment({ post_id, user_id: req.user.id, content });
     res.status(201).json({ id: commentId, message: 'Comment created successfully' });
   } catch (error) {

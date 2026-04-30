@@ -2,7 +2,10 @@ const todosDAL = require('../dal/todos.dal');
 
 exports.getAllTodos = async (req, res) => {
   try {
-    const todos = await todosDAL.getTodosByUserId(req.user.id);
+    const filters = {};
+    if (req.query.completed !== undefined)
+      filters.completed = req.query.completed === 'true' ? 1 : 0;
+    const todos = await todosDAL.getTodosByUserId(req.user.id, filters);
     res.json(todos);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -22,6 +25,7 @@ exports.getTodoById = async (req, res) => {
 exports.createTodo = async (req, res) => {
   try {
     const { title } = req.body;
+    if (!title) return res.status(400).json({ error: 'Title is required' });
     const todoId = await todosDAL.createTodo({ user_id: req.user.id, title });
     res.status(201).json({ id: todoId, message: 'Todo created successfully' });
   } catch (error) {

@@ -1,10 +1,18 @@
 const pool = require('../db');
 
-exports.getAllPosts = async () => {
-  const [rows] = await pool.query(
-    'SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id ORDER BY posts.created_at DESC'
+exports.getAllPosts = async (includeComments = false) => {
+  const [posts] = await pool.query(
+    'SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id ORDER BY posts.id'
   );
-  return rows;
+  if (!includeComments) return posts;
+  for (const post of posts) {
+    const [comments] = await pool.query(
+      'SELECT comments.*, users.username FROM comments JOIN users ON comments.user_id = users.id WHERE post_id = ? ORDER BY comments.id',
+      [post.id]
+    );
+    post.comments = comments;
+  }
+  return posts;
 };
 
 exports.getPostById = async (id) => {

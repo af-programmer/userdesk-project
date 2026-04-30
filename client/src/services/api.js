@@ -16,12 +16,18 @@ const fetchAPI = async (url, options = {}) => {
 
 export const login = (data) => fetchAPI('/users/login', { method: 'POST', body: JSON.stringify(data) });
 
-export const getTodos = () => fetchAPI('/todos');
+export const getTodos = (params = {}) => {
+  const query = new URLSearchParams(params).toString();
+  return fetchAPI(`/todos${query ? '?' + query : ''}`);
+};
 export const createTodo = (data) => fetchAPI('/todos', { method: 'POST', body: JSON.stringify(data) });
 export const updateTodo = (id, data) => fetchAPI(`/todos/${id}`, { method: 'PUT', body: JSON.stringify(data) });
 export const deleteTodo = (id) => fetchAPI(`/todos/${id}`, { method: 'DELETE' });
 
-export const getPosts = () => fetchAPI('/posts');
+export const getPosts = (params = {}) => {
+  const query = new URLSearchParams(params).toString();
+  return fetchAPI(`/posts${query ? '?' + query : ''}`);
+};
 export const createPost = (data) => fetchAPI('/posts', { method: 'POST', body: JSON.stringify(data) });
 export const updatePost = (id, data) => fetchAPI(`/posts/${id}`, { method: 'PUT', body: JSON.stringify(data) });
 export const deletePost = (id) => fetchAPI(`/posts/${id}`, { method: 'DELETE' });

@@ -1,7 +1,14 @@
 const pool = require('../db');
 
-exports.getTodosByUserId = async (userId) => {
-  const [rows] = await pool.query('SELECT * FROM todos WHERE user_id = ? ORDER BY id', [userId]);
+exports.getTodosByUserId = async (userId, filters = {}) => {
+  let query = 'SELECT * FROM todos WHERE user_id = ?';
+  const params = [userId];
+  if (filters.completed !== undefined) {
+    query += ' AND completed = ?';
+    params.push(filters.completed);
+  }
+  query += ' ORDER BY id';
+  const [rows] = await pool.query(query, params);
   return rows;
 };
 
