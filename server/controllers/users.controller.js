@@ -36,7 +36,7 @@ exports.getUserById = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
+// not shooroe if this route is needed or not, but just in case we will add it, and only admin can access it
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await usersDAL.getAllUsers();

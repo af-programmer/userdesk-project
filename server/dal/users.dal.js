@@ -1,24 +1,24 @@
 const pool = require('../db');
 
 exports.createUser = async ({ username, email, password }) => {
-  const conn = await pool.getConnection();
+  const connection = await pool.getConnection();
   try {
-    await conn.beginTransaction();
-    const [result] = await conn.query(
+    await connection.beginTransaction();
+    const [result] = await connection.query(
       'INSERT INTO users (username, email) VALUES (?, ?)',
       [username, email]
     );
-    await conn.query(
+    await connection.query(
       'INSERT INTO passwords (user_id, password_hash) VALUES (?, ?)',
       [result.insertId, password]
     );
-    await conn.commit();
+    await connection.commit();
     return result.insertId;
   } catch (err) {
-    await conn.rollback();
+    await connection.rollback();
     throw err;
   } finally {
-    conn.release();
+    connection.release();
   }
 };
 
@@ -27,6 +27,7 @@ exports.getUserByUsername = async (username) => {
     'SELECT users.*, passwords.password_hash FROM users JOIN passwords ON users.id = passwords.user_id WHERE users.username = ?',
     [username]
   );
+  if (!rows.length) return null;
   return rows[0];
 };
 
@@ -35,9 +36,11 @@ exports.getUserById = async (id) => {
     'SELECT id, username, email, created_at FROM users WHERE id = ?',
     [id]
   );
+  if (!rows.length) return null;
   return rows[0];
 };
 
+//not shooroe if this route is needed or not, but just in case we will add it, and only admin can access it
 exports.getAllUsers = async () => {
   const [rows] = await pool.query('SELECT id, username, email, created_at FROM users');
   return rows;

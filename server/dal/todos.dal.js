@@ -37,3 +37,4 @@ exports.deleteTodo = async (id) => {
   const [result] = await pool.query('DELETE FROM todos WHERE id = ?', [id]);
   return result.affectedRows;
 };
+  
