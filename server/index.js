@@ -1,12 +1,12 @@
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
+import express from 'express';
+import cors from 'cors';
+import 'dotenv/config';
 
-const usersRoutes = require('./routes/users.routes');
-const todosRoutes = require('./routes/todos.routes');
-const postsRoutes = require('./routes/posts.routes');
-const commentsRoutes = require('./routes/comments.routes');
-const logger = require('./middleware/logger.middleware');
+import usersRoutes from './routes/users.routes.js';
+import todosRoutes from './routes/todos.routes.js';
+import postsRoutes from './routes/posts.routes.js';
+import commentsRoutes from './routes/comments.routes.js';
+import logger from './middleware/logger.middleware.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;

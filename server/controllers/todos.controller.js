@@ -1,6 +1,6 @@
-const todosDAL = require('../dal/todos.dal');
+import * as todosDAL from '../dal/todos.dal.js';
 
-exports.getAllTodos = async (req, res) => {
+export const getAllTodos = async (req, res) => {
   try {
     const filters = {};
     if (req.query.completed !== undefined)
@@ -12,7 +12,7 @@ exports.getAllTodos = async (req, res) => {
   }
 };
 
-exports.getTodoById = async (req, res) => {
+export const getTodoById = async (req, res) => {
   try {
     const todo = await todosDAL.getTodoById(req.params.id);
     if (!todo) return res.status(404).json({ error: 'Todo not found' });
@@ -22,7 +22,7 @@ exports.getTodoById = async (req, res) => {
   }
 };
 
-exports.createTodo = async (req, res) => {
+export const createTodo = async (req, res) => {
   try {
     const { title } = req.body;
     if (!title) return res.status(400).json({ error: 'Title is required' });
@@ -33,7 +33,7 @@ exports.createTodo = async (req, res) => {
   }
 };
 
-exports.updateTodo = async (req, res) => {
+export const updateTodo = async (req, res) => {
   try {
     const todo = await todosDAL.getTodoById(req.params.id);
     if (!todo) return res.status(404).json({ error: 'Todo not found' });
@@ -45,7 +45,7 @@ exports.updateTodo = async (req, res) => {
   }
 };
 
-exports.deleteTodo = async (req, res) => {
+export const deleteTodo = async (req, res) => {
   try {
     const todo = await todosDAL.getTodoById(req.params.id);
     if (!todo) return res.status(404).json({ error: 'Todo not found' });

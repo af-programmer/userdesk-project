@@ -1,6 +1,6 @@
-const pool = require('../db');
+import pool from '../db.js';
 
-exports.createUser = async ({ username, email, password }) => {
+export const createUser = async ({ username, email, password }) => {
   const connection = await pool.getConnection();
   try {
     await connection.beginTransaction();
@@ -22,7 +22,7 @@ exports.createUser = async ({ username, email, password }) => {
   }
 };
 
-exports.getUserByUsername = async (username) => {
+export const getUserByUsername = async (username) => {
   const [rows] = await pool.query(
     'SELECT users.*, passwords.password_hash FROM users JOIN passwords ON users.id = passwords.user_id WHERE users.username = ?',
     [username]
@@ -31,7 +31,7 @@ exports.getUserByUsername = async (username) => {
   return rows[0];
 };
 
-exports.getUserById = async (id) => {
+export const getUserById = async (id) => {
   const [rows] = await pool.query(
     'SELECT id, username, email, created_at FROM users WHERE id = ?',
     [id]
@@ -41,7 +41,7 @@ exports.getUserById = async (id) => {
 };
 
 //not shooroe if this route is needed or not, but just in case we will add it, and only admin can access it
-exports.getAllUsers = async () => {
+export const getAllUsers = async () => {
   const [rows] = await pool.query('SELECT id, username, email, created_at FROM users');
   return rows;
 };

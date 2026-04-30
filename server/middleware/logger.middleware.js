@@ -1,4 +1,4 @@
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
   next();
 };

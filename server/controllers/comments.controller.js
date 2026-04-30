@@ -1,6 +1,6 @@
-const commentsDAL = require('../dal/comments.dal');
+import * as commentsDAL from '../dal/comments.dal.js';
 
-exports.getCommentsByPost = async (req, res) => {
+export const getCommentsByPost = async (req, res) => {
   try {
     const comments = await commentsDAL.getCommentsByPostId(req.params.postId);
     res.json(comments);
@@ -9,7 +9,7 @@ exports.getCommentsByPost = async (req, res) => {
   }
 };
 
-exports.createComment = async (req, res) => {
+export const createComment = async (req, res) => {
   try {
     const { post_id, content } = req.body;
     if (!content || !post_id) return res.status(400).json({ error: 'content and post_id are required' });
@@ -20,7 +20,7 @@ exports.createComment = async (req, res) => {
   }
 };
 
-exports.updateComment = async (req, res) => {
+export const updateComment = async (req, res) => {
   try {
     const comment = await commentsDAL.getCommentById(req.params.id);
     if (!comment) return res.status(404).json({ error: 'Comment not found' });
@@ -32,7 +32,7 @@ exports.updateComment = async (req, res) => {
   }
 };
 
-exports.deleteComment = async (req, res) => {
+export const deleteComment = async (req, res) => {
   try {
     const comment = await commentsDAL.getCommentById(req.params.id);
     if (!comment) return res.status(404).json({ error: 'Comment not found' });

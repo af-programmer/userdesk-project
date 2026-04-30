@@ -1,6 +1,6 @@
-const postsDAL = require('../dal/posts.dal');
+import * as postsDAL from '../dal/posts.dal.js';
 
-exports.getAllPosts = async (req, res) => {
+export const getAllPosts = async (req, res) => {
   try {
     const posts = await postsDAL.getAllPosts(req.query.include === 'comments');
     res.json(posts);
@@ -9,7 +9,7 @@ exports.getAllPosts = async (req, res) => {
   }
 };
 
-exports.getPostById = async (req, res) => {
+export const getPostById = async (req, res) => {
   try {
     const post = await postsDAL.getPostById(req.params.id);
     if (!post) return res.status(404).json({ error: 'Post not found' });
@@ -19,7 +19,7 @@ exports.getPostById = async (req, res) => {
   }
 };
 
-exports.createPost = async (req, res) => {
+export const createPost = async (req, res) => {
   try {
     const { title, content } = req.body;
     if (!title) return res.status(400).json({ error: 'Title is required' });
@@ -30,7 +30,7 @@ exports.createPost = async (req, res) => {
   }
 };
 
-exports.updatePost = async (req, res) => {
+export const updatePost = async (req, res) => {
   try {
     const post = await postsDAL.getPostById(req.params.id);
     if (!post) return res.status(404).json({ error: 'Post not found' });
@@ -42,7 +42,7 @@ exports.updatePost = async (req, res) => {
   }
 };
 
-exports.deletePost = async (req, res) => {
+export const deletePost = async (req, res) => {
   try {
     const post = await postsDAL.getPostById(req.params.id);
     if (!post) return res.status(404).json({ error: 'Post not found' });

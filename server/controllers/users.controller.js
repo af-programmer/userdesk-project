@@ -1,8 +1,8 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const usersDAL = require('../dal/users.dal');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import * as usersDAL from '../dal/users.dal.js';
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -13,7 +13,7 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await usersDAL.getUserByUsername(username);
@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.getUserById = async (req, res) => {
+export const getUserById = async (req, res) => {
   try {
     const user = await usersDAL.getUserById(req.params.id);
     if (!user) return res.status(404).json({ error: 'User not found' });
@@ -37,7 +37,7 @@ exports.getUserById = async (req, res) => {
   }
 };
 // not shooroe if this route is needed or not, but just in case we will add it, and only admin can access it
-exports.getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     const users = await usersDAL.getAllUsers();
     res.json(users);
