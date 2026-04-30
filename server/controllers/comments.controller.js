@@ -19,8 +19,23 @@ exports.createComment = async (req, res) => {
   }
 };
 
+exports.updateComment = async (req, res) => {
+  try {
+    const comment = await commentsDAL.getCommentById(req.params.id);
+    if (!comment) return res.status(404).json({ error: 'Comment not found' });
+    if (comment.user_id !== req.user.id) return res.status(403).json({ error: 'Forbidden' });
+    await commentsDAL.updateComment(req.params.id, req.body.content);
+    res.json({ message: 'Comment updated successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.deleteComment = async (req, res) => {
   try {
+    const comment = await commentsDAL.getCommentById(req.params.id);
+    if (!comment) return res.status(404).json({ error: 'Comment not found' });
+    if (comment.user_id !== req.user.id) return res.status(403).json({ error: 'Forbidden' });
     await commentsDAL.deleteComment(req.params.id);
     res.json({ message: 'Comment deleted successfully' });
   } catch (error) {

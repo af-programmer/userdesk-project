@@ -31,6 +31,9 @@ exports.createPost = async (req, res) => {
 
 exports.updatePost = async (req, res) => {
   try {
+    const post = await postsDAL.getPostById(req.params.id);
+    if (!post) return res.status(404).json({ error: 'Post not found' });
+    if (post.user_id !== req.user.id) return res.status(403).json({ error: 'Forbidden' });
     await postsDAL.updatePost(req.params.id, req.body);
     res.json({ message: 'Post updated successfully' });
   } catch (error) {
@@ -40,6 +43,9 @@ exports.updatePost = async (req, res) => {
 
 exports.deletePost = async (req, res) => {
   try {
+    const post = await postsDAL.getPostById(req.params.id);
+    if (!post) return res.status(404).json({ error: 'Post not found' });
+    if (post.user_id !== req.user.id) return res.status(403).json({ error: 'Forbidden' });
     await postsDAL.deletePost(req.params.id);
     res.json({ message: 'Post deleted successfully' });
   } catch (error) {

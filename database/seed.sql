@@ -1,8 +1,14 @@
 -- Insert sample users
-INSERT INTO users (username, email, password) VALUES
-('john_doe', 'john@example.com', '$2b$10$hashedpassword1'),
-('jane_smith', 'jane@example.com', '$2b$10$hashedpassword2'),
-('bob_wilson', 'bob@example.com', '$2b$10$hashedpassword3');
+INSERT INTO users (username, email) VALUES
+('john_doe', 'john@example.com'),
+('jane_smith', 'jane@example.com'),
+('bob_wilson', 'bob@example.com');
+
+-- Insert passwords (bcrypt hash of 'password123')
+INSERT INTO passwords (user_id, password_hash) VALUES
+(1, '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'),
+(2, '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'),
+(3, '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy');
 
 -- Insert sample todos
 INSERT INTO todos (user_id, title, completed) VALUES

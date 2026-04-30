@@ -9,14 +9,12 @@ const fetchAPI = async (url, options = {}) => {
     ...(token && { Authorization: `Bearer ${token}` }),
     ...options.headers,
   };
-
   const response = await fetch(`${API_URL}${url}`, { ...options, headers });
   if (!response.ok) throw new Error('Request failed');
   return response.json();
 };
 
 export const login = (data) => fetchAPI('/users/login', { method: 'POST', body: JSON.stringify(data) });
-export const register = (data) => fetchAPI('/users/register', { method: 'POST', body: JSON.stringify(data) });
 
 export const getTodos = () => fetchAPI('/todos');
 export const createTodo = (data) => fetchAPI('/todos', { method: 'POST', body: JSON.stringify(data) });
@@ -24,5 +22,11 @@ export const updateTodo = (id, data) => fetchAPI(`/todos/${id}`, { method: 'PUT'
 export const deleteTodo = (id) => fetchAPI(`/todos/${id}`, { method: 'DELETE' });
 
 export const getPosts = () => fetchAPI('/posts');
+export const createPost = (data) => fetchAPI('/posts', { method: 'POST', body: JSON.stringify(data) });
+export const updatePost = (id, data) => fetchAPI(`/posts/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+export const deletePost = (id) => fetchAPI(`/posts/${id}`, { method: 'DELETE' });
+
 export const getComments = (postId) => fetchAPI(`/comments/post/${postId}`);
 export const createComment = (data) => fetchAPI('/comments', { method: 'POST', body: JSON.stringify(data) });
+export const updateComment = (id, data) => fetchAPI(`/comments/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+export const deleteComment = (id) => fetchAPI(`/comments/${id}`, { method: 'DELETE' });

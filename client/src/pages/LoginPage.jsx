@@ -1,53 +1,46 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login, register } from '../services/api';
+import { login } from '../services/api';
 
 function LoginPage() {
-  const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     try {
-      const data = isLogin ? await login(formData) : await register(formData);
+      const data = await login(formData);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
       navigate('/app');
-    } catch (error) {
-      alert(error.message);
+    } catch {
+      setError('Invalid username or password');
     }
   };
 
   return (
     <div>
-      <h1>{isLogin ? 'Login' : 'Register'}</h1>
+      <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        {!isLogin && (
-          <input
-            type="text"
-            placeholder="Username"
-            value={formData.username}
-            onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-          />
-        )}
         <input
-          type="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          type="text"
+          placeholder="Username"
+          value={formData.username}
+          onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+          required
         />
         <input
           type="password"
           placeholder="Password"
           value={formData.password}
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+          required
         />
-        <button type="submit">{isLogin ? 'Login' : 'Register'}</button>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <button type="submit">Login</button>
       </form>
-      <button onClick={() => setIsLogin(!isLogin)}>
-        {isLogin ? 'Need an account?' : 'Already have an account?'}
-      </button>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 const pool = require('../db');
 
 exports.getTodosByUserId = async (userId) => {
-  const [rows] = await pool.query('SELECT * FROM todos WHERE user_id = ?', [userId]);
+  const [rows] = await pool.query('SELECT * FROM todos WHERE user_id = ? ORDER BY id', [userId]);
   return rows;
 };
 

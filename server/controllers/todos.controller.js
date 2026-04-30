@@ -31,6 +31,9 @@ exports.createTodo = async (req, res) => {
 
 exports.updateTodo = async (req, res) => {
   try {
+    const todo = await todosDAL.getTodoById(req.params.id);
+    if (!todo) return res.status(404).json({ error: 'Todo not found' });
+    if (todo.user_id !== req.user.id) return res.status(403).json({ error: 'Forbidden' });
     await todosDAL.updateTodo(req.params.id, req.body);
     res.json({ message: 'Todo updated successfully' });
   } catch (error) {
@@ -40,6 +43,9 @@ exports.updateTodo = async (req, res) => {
 
 exports.deleteTodo = async (req, res) => {
   try {
+    const todo = await todosDAL.getTodoById(req.params.id);
+    if (!todo) return res.status(404).json({ error: 'Todo not found' });
+    if (todo.user_id !== req.user.id) return res.status(403).json({ error: 'Forbidden' });
     await todosDAL.deleteTodo(req.params.id);
     res.json({ message: 'Todo deleted successfully' });
   } catch (error) {

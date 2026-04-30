@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-function NavBar() {
+function NavBar({ username }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -11,10 +11,9 @@ function NavBar() {
 
   return (
     <nav>
-      <Link to="/app">Home</Link>
-      <Link to="/todos">Todos</Link>
-      <Link to="/posts">Posts</Link>
-      <Link to="/info">Info</Link>
+      <Link to={`/users/${username}/info`}>Info</Link>
+      <Link to={`/users/${username}/todos`}>Todos</Link>
+      <Link to={`/users/${username}/posts`}>Posts</Link>
       <button onClick={handleLogout}>Logout</button>
     </nav>
   );

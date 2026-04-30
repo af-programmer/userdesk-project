@@ -9,17 +9,18 @@ import NavBar from './components/NavBar';
 
 function App() {
   const { user } = useAuth();
+  const username = user?.username;
 
   return (
     <>
-      {user && <NavBar />}
+      {user && <NavBar username={username} />}
       <Routes>
-        <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/app" />} />
-        <Route path="/app" element={user ? <AppPage /> : <Navigate to="/login" />} />
-        <Route path="/todos" element={user ? <TodosPage /> : <Navigate to="/login" />} />
-        <Route path="/posts" element={user ? <PostsPage /> : <Navigate to="/login" />} />
-        <Route path="/info" element={user ? <InfoPage /> : <Navigate to="/login" />} />
-        <Route path="/" element={<Navigate to={user ? "/app" : "/login"} />} />
+        <Route path="/login" element={!user ? <LoginPage /> : <Navigate to={`/users/${username}/app`} />} />
+        <Route path="/users/:username/app" element={user ? <AppPage /> : <Navigate to="/login" />} />
+        <Route path="/users/:username/todos" element={user ? <TodosPage /> : <Navigate to="/login" />} />
+        <Route path="/users/:username/posts" element={user ? <PostsPage /> : <Navigate to="/login" />} />
+        <Route path="/users/:username/info" element={user ? <InfoPage /> : <Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to={user ? `/users/${username}/app` : '/login'} />} />
       </Routes>
     </>
   );

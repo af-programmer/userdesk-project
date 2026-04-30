@@ -1,8 +1,12 @@
 function InfoPage() {
+  const user = JSON.parse(localStorage.getItem('user'));
+
   return (
     <div>
       <h1>Info</h1>
-      <p>This is a full-stack application with Node.js, Express, MySQL, and React.</p>
+      <p><strong>Username:</strong> {user?.username}</p>
+      <p><strong>Email:</strong> {user?.email}</p>
+      <p><strong>ID:</strong> {user?.id}</p>
     </div>
   );
 }
