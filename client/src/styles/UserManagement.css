@@ -1,0 +1,106 @@
+/* UserManagement Component Styles */
+.user-management {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.search-container {
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.users-table th,
+.users-table td {
+  padding: 12px;
+  text-align: right;
+  border-bottom: 1px solid #eee;
+}
+
+.users-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+}
+
+.users-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.status-active {
+  color: #28a745;
+  font-weight: 500;
+}
+
+.status-blocked {
+  color: #dc3545;
+  font-weight: 500;
+}
+
+.action-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.block-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.unblock-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.action-button:hover {
+  opacity: 0.8;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination-button {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination-button:hover {
+  background-color: #f8f9fa;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-info {
+  font-weight: 500;
+  color: #333;
+}

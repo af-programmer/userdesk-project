@@ -13,26 +13,26 @@ function PostCard({ post, currentUser, onUpdate, onDelete }) {
     <div className="card">
       {editing ? (
         <>
-          <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
-          <textarea value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={3} style={{ marginTop: 8 }} />
+          <input className="form-input" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
+          <textarea className="form-textarea mt-2" value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={3} />
           <div className="card-actions">
-            <button onClick={handleSave}>Save</button>
-            <button className="btn-ghost" onClick={() => setEditing(false)}>Cancel</button>
+            <button className="btn btn-primary" onClick={handleSave}>Save</button>
+            <button className="btn btn-secondary" onClick={() => setEditing(false)}>Cancel</button>
           </div>
         </>
       ) : (
         <>
           <h3>{post.title}</h3>
-          <p style={{ margin: '6px 0 8px' }}>{post.content}</p>
+          <p className="mb-2">{post.content}</p>
           <small>By {post.username}</small>
           <div className="card-actions">
             {isOwner && (
               <>
-                <button className="btn-ghost" onClick={() => setEditing(true)}>Edit</button>
-                <button className="btn-danger" onClick={() => onDelete(post.id)}>Delete</button>
+                <button className="btn btn-secondary" onClick={() => setEditing(true)}>Edit</button>
+                <button className="btn btn-danger" onClick={() => onDelete(post.id)}>Delete</button>
               </>
             )}
-            <button className="btn-ghost" onClick={() => setShowComments(!showComments)}>
+            <button className="btn btn-secondary" onClick={() => setShowComments(!showComments)}>
               {showComments ? 'Hide Comments' : 'Comments'}
             </button>
           </div>

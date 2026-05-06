@@ -27,20 +27,20 @@ function CommentList({ postId, currentUser }) {
       {comments.map((comment) => (
         <div key={comment.id} className="comment-item">
           {editingId === comment.id ? (
-            <div style={{ display: 'flex', gap: 8 }}>
-              <input value={editContent} onChange={(e) => setEditContent(e.target.value)} style={{ flex: 1 }} />
-              <button onClick={() => handleUpdate(comment.id)}>Save</button>
-              <button className="btn-ghost" onClick={() => setEditingId(null)}>Cancel</button>
+            <div className="d-flex gap-2">
+              <input className="form-input flex-1" value={editContent} onChange={(e) => setEditContent(e.target.value)} />
+              <button className="btn btn-primary" onClick={() => handleUpdate(comment.id)}>Save</button>
+              <button className="btn btn-secondary" onClick={() => setEditingId(null)}>Cancel</button>
             </div>
           ) : (
             <>
               <p>{comment.content}</p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 6 }}>
+              <div className="d-flex align-items-center gap-2 mt-1">
                 <small>By {comment.username}</small>
                 {currentUser?.id === comment.user_id && (
                   <>
-                    <button className="btn-ghost" style={{ padding: '4px 10px', fontSize: '0.8rem' }} onClick={() => { setEditingId(comment.id); setEditContent(comment.content); }}>Edit</button>
-                    <button className="btn-danger" style={{ padding: '4px 10px', fontSize: '0.8rem' }} onClick={() => handleDelete(comment.id)}>Delete</button>
+                    <button className="btn btn-sm btn-secondary" onClick={() => { setEditingId(comment.id); setEditContent(comment.content); }}>Edit</button>
+                    <button className="btn btn-sm btn-danger" onClick={() => handleDelete(comment.id)}>Delete</button>
                   </>
                 )}
               </div>
@@ -48,15 +48,16 @@ function CommentList({ postId, currentUser }) {
           )}
         </div>
       ))}
-      <form className="inline" onSubmit={handleSubmit} style={{ marginTop: 12 }}>
+      <form className="inline mt-3" onSubmit={handleSubmit}>
         <input
           type="text"
+          className="form-input"
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           placeholder="Add a comment..."
           required
         />
-        <button type="submit">Post</button>
+        <button type="submit" className="btn btn-primary">Post</button>
       </form>
     </div>
   );
