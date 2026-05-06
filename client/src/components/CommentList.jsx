@@ -18,48 +18,42 @@ function CommentList({ postId, currentUser }) {
     loadComments();
   };
 
-  const handleUpdate = async (id) => {
-    await updateComment(id, { content: editContent });
-    setEditingId(null);
-    loadComments();
-  };
-
-  const handleDelete = async (id) => {
-    await deleteComment(id);
-    loadComments();
-  };
+  const handleUpdate = async (id) => { await updateComment(id, { content: editContent }); setEditingId(null); loadComments(); };
+  const handleDelete = async (id) => { await deleteComment(id); loadComments(); };
 
   return (
     <div>
       <h4>Comments</h4>
       {comments.map((comment) => (
-        <div key={comment.id}>
+        <div key={comment.id} className="comment-item">
           {editingId === comment.id ? (
-            <>
-              <input value={editContent} onChange={(e) => setEditContent(e.target.value)} />
+            <div style={{ display: 'flex', gap: 8 }}>
+              <input value={editContent} onChange={(e) => setEditContent(e.target.value)} style={{ flex: 1 }} />
               <button onClick={() => handleUpdate(comment.id)}>Save</button>
-              <button onClick={() => setEditingId(null)}>Cancel</button>
-            </>
+              <button className="btn-ghost" onClick={() => setEditingId(null)}>Cancel</button>
+            </div>
           ) : (
             <>
               <p>{comment.content}</p>
-              <small>By {comment.username}</small>
-              {currentUser?.id === comment.user_id && (
-                <>
-                  <button onClick={() => { setEditingId(comment.id); setEditContent(comment.content); }}>Edit</button>
-                  <button onClick={() => handleDelete(comment.id)}>Delete</button>
-                </>
-              )}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 6 }}>
+                <small>By {comment.username}</small>
+                {currentUser?.id === comment.user_id && (
+                  <>
+                    <button className="btn-ghost" style={{ padding: '4px 10px', fontSize: '0.8rem' }} onClick={() => { setEditingId(comment.id); setEditContent(comment.content); }}>Edit</button>
+                    <button className="btn-danger" style={{ padding: '4px 10px', fontSize: '0.8rem' }} onClick={() => handleDelete(comment.id)}>Delete</button>
+                  </>
+                )}
+              </div>
             </>
           )}
         </div>
       ))}
-      <form onSubmit={handleSubmit}>
+      <form className="inline" onSubmit={handleSubmit} style={{ marginTop: 12 }}>
         <input
           type="text"
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
-          placeholder="Add a comment"
+          placeholder="Add a comment..."
           required
         />
         <button type="submit">Post</button>

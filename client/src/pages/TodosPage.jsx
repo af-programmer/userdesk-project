@@ -11,8 +11,7 @@ function TodosPage() {
 
   const loadTodos = async () => {
     const params = filter !== 'all' ? { completed: filter === 'completed' } : {};
-    const data = await getTodos(params);
-    setTodos(data);
+    setTodos(await getTodos(params));
   };
 
   const handleCreate = async (e) => {
@@ -22,34 +21,24 @@ function TodosPage() {
     loadTodos();
   };
 
-  const handleToggle = async (id, completed) => {
-    await updateTodo(id, { completed: !completed });
-    loadTodos();
-  };
-
-  const handleEdit = async (id, title) => {
-    await updateTodo(id, { title });
-    loadTodos();
-  };
-
-  const handleDelete = async (id) => {
-    await deleteTodo(id);
-    loadTodos();
-  };
+  const handleToggle = async (id, completed) => { await updateTodo(id, { completed: !completed }); loadTodos(); };
+  const handleEdit = async (id, title) => { await updateTodo(id, { title }); loadTodos(); };
+  const handleDelete = async (id) => { await deleteTodo(id); loadTodos(); };
 
   return (
-    <div>
+    <div className="page">
       <h1>My Todos</h1>
-      <form onSubmit={handleCreate}>
+      <form className="inline" onSubmit={handleCreate}>
         <input
           type="text"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
-          placeholder="New todo"
+          placeholder="New todo..."
+          required
         />
         <button type="submit">Add</button>
       </form>
-      <div>
+      <div className="filter-group">
         {['all', 'active', 'completed'].map((f) => (
           <button key={f} onClick={() => setFilter(f)} disabled={filter === f}>
             {f.charAt(0).toUpperCase() + f.slice(1)}
@@ -58,13 +47,7 @@ function TodosPage() {
       </div>
       <div>
         {todos.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            onToggle={handleToggle}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
+          <TodoItem key={todo.id} todo={todo} onToggle={handleToggle} onEdit={handleEdit} onDelete={handleDelete} />
         ))}
       </div>
     </div>

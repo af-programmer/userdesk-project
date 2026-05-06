@@ -1,3 +1,15 @@
+:root {
+  --bg: rgb(46, 49, 48);
+  --primary: rgb(64, 122, 94);
+  --secondary: rgb(116, 175, 147);
+  --surface: rgb(58, 62, 60);
+  --surface2: rgb(70, 75, 72);
+  --text: rgb(220, 230, 225);
+  --text-muted: rgb(150, 165, 158);
+  --radius: 8px;
+  --transition: 0.2s ease;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,33 +17,330 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  padding: 20px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
 }
 
+/* NAV */
 nav {
   display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
-  padding: 10px;
-  background: #f0f0f0;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--primary);
 }
 
 nav a {
   text-decoration: none;
-  color: #333;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 6px 14px;
+  border-radius: var(--radius);
+  transition: background var(--transition), color var(--transition);
 }
 
-button {
-  padding: 5px 10px;
+nav a:hover {
+  background: var(--surface2);
+  color: var(--secondary);
+}
+
+nav button {
+  margin-left: auto;
+}
+
+/* LAYOUT */
+.page {
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin-bottom: 24px;
+}
+
+h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin-bottom: 12px;
+}
+
+p, small {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* INPUTS */
+input[type="text"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--surface2);
+  border: 1px solid var(--surface2);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color var(--transition);
+  resize: vertical;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+  border-color: var(--primary);
+}
+
+input[type="checkbox"] {
+  accent-color: var(--primary);
+  width: 16px;
+  height: 16px;
   cursor: pointer;
 }
 
-input {
-  padding: 5px;
-  margin: 5px;
+/* BUTTONS */
+button {
+  padding: 8px 18px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background var(--transition), opacity var(--transition);
 }
 
+button:hover {
+  background: var(--secondary);
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+  background: var(--primary);
+}
+
+button.btn-ghost {
+  background: var(--surface2);
+  color: var(--text-muted);
+}
+
+button.btn-ghost:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
+button.btn-danger {
+  background: transparent;
+  color: #e07070;
+  border: 1px solid #e07070;
+  padding: 6px 14px;
+}
+
+button.btn-danger:hover {
+  background: #e07070;
+  color: #fff;
+}
+
+/* FORMS */
 form {
-  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+form.inline {
+  flex-direction: row;
+  align-items: center;
+}
+
+form.inline input {
+  flex: 1;
+}
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--surface2);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  transition: border-color var(--transition);
+}
+
+.card:hover {
+  border-color: var(--primary);
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+/* COMMENTS */
+.comments-section {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--surface2);
+}
+
+.comment-item {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--surface2);
+}
+
+.comment-item:last-child {
+  border-bottom: none;
+}
+
+/* FILTER BUTTONS */
+.filter-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.filter-group button {
+  background: var(--surface2);
+  color: var(--text-muted);
+  padding: 6px 16px;
+  font-size: 0.85rem;
+}
+
+.filter-group button:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.filter-group button:disabled {
+  background: var(--primary);
+  color: #fff;
+  opacity: 1;
+}
+
+/* TODO ITEM */
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--surface2);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+}
+
+.todo-item span {
+  flex: 1;
+  font-size: 0.92rem;
+}
+
+.todo-item.completed span {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+/* INFO PAGE */
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--surface2);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.info-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 0.92rem;
+}
+
+.info-row strong {
+  color: var(--secondary);
+  min-width: 90px;
+}
+
+/* LOGIN */
+.login-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.login-box {
+  background: var(--surface);
+  border: 1px solid var(--surface2);
+  border-radius: var(--radius);
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.login-box h1 {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.error-msg {
+  color: #e07070;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* APP PAGE */
+.app-welcome {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.app-welcome h1 {
+  font-size: 2rem;
+  margin-bottom: 32px;
+}
+
+.app-nav-grid {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.app-nav-grid a {
+  display: block;
+  padding: 18px 36px;
+  background: var(--surface);
+  border: 1px solid var(--surface2);
+  border-radius: var(--radius);
+  color: var(--secondary);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.app-nav-grid a:hover {
+  border-color: var(--primary);
+  background: var(--surface2);
 }

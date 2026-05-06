@@ -7,37 +7,42 @@ function PostCard({ post, currentUser, onUpdate, onDelete }) {
   const [form, setForm] = useState({ title: post.title, content: post.content });
   const isOwner = currentUser?.id === post.user_id;
 
-  const handleSave = () => {
-    onUpdate(post.id, form.title, form.content);
-    setEditing(false);
-  };
+  const handleSave = () => { onUpdate(post.id, form.title, form.content); setEditing(false); };
 
   return (
-    <div>
+    <div className="card">
       {editing ? (
         <>
           <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
-          <textarea value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} />
-          <button onClick={handleSave}>Save</button>
-          <button onClick={() => setEditing(false)}>Cancel</button>
+          <textarea value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={3} style={{ marginTop: 8 }} />
+          <div className="card-actions">
+            <button onClick={handleSave}>Save</button>
+            <button className="btn-ghost" onClick={() => setEditing(false)}>Cancel</button>
+          </div>
         </>
       ) : (
         <>
           <h3>{post.title}</h3>
-          <p>{post.content}</p>
+          <p style={{ margin: '6px 0 8px' }}>{post.content}</p>
           <small>By {post.username}</small>
-          {isOwner && (
-            <>
-              <button onClick={() => setEditing(true)}>Edit</button>
-              <button onClick={() => onDelete(post.id)}>Delete</button>
-            </>
-          )}
+          <div className="card-actions">
+            {isOwner && (
+              <>
+                <button className="btn-ghost" onClick={() => setEditing(true)}>Edit</button>
+                <button className="btn-danger" onClick={() => onDelete(post.id)}>Delete</button>
+              </>
+            )}
+            <button className="btn-ghost" onClick={() => setShowComments(!showComments)}>
+              {showComments ? 'Hide Comments' : 'Comments'}
+            </button>
+          </div>
         </>
       )}
-      <button onClick={() => setShowComments(!showComments)}>
-        {showComments ? 'Hide Comments' : 'Show Comments'}
-      </button>
-      {showComments && <CommentList postId={post.id} currentUser={currentUser} />}
+      {showComments && (
+        <div className="comments-section">
+          <CommentList postId={post.id} currentUser={currentUser} />
+        </div>
+      )}
     </div>
   );
 }

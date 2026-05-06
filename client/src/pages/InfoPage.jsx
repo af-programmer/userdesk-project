@@ -2,11 +2,13 @@ function InfoPage() {
   const user = JSON.parse(localStorage.getItem('user'));
 
   return (
-    <div>
+    <div className="page">
       <h1>Info</h1>
-      <p><strong>Username:</strong> {user?.username}</p>
-      <p><strong>Email:</strong> {user?.email}</p>
-      <p><strong>ID:</strong> {user?.id}</p>
+      <div className="info-card">
+        <div className="info-row"><strong>Username</strong><span>{user?.username}</span></div>
+        <div className="info-row"><strong>Email</strong><span>{user?.email}</span></div>
+        <div className="info-row"><strong>ID</strong><span>{user?.id}</span></div>
+      </div>
     </div>
   );
 }

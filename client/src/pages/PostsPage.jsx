@@ -18,18 +18,11 @@ function PostsPage() {
     loadPosts();
   };
 
-  const handleUpdate = async (id, title, content) => {
-    await updatePost(id, { title, content });
-    loadPosts();
-  };
-
-  const handleDelete = async (id) => {
-    await deletePost(id);
-    loadPosts();
-  };
+  const handleUpdate = async (id, title, content) => { await updatePost(id, { title, content }); loadPosts(); };
+  const handleDelete = async (id) => { await deletePost(id); loadPosts(); };
 
   return (
-    <div>
+    <div className="page">
       <h1>Posts</h1>
       <form onSubmit={handleCreate}>
         <input
@@ -43,19 +36,14 @@ function PostsPage() {
           placeholder="Content"
           value={form.content}
           onChange={(e) => setForm({ ...form, content: e.target.value })}
+          rows={3}
           required
         />
         <button type="submit">Add Post</button>
       </form>
       <div>
         {posts.map((post) => (
-          <PostCard
-            key={post.id}
-            post={post}
-            currentUser={currentUser}
-            onUpdate={handleUpdate}
-            onDelete={handleDelete}
-          />
+          <PostCard key={post.id} post={post} currentUser={currentUser} onUpdate={handleUpdate} onDelete={handleDelete} />
         ))}
       </div>
     </div>
