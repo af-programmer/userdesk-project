@@ -6,11 +6,11 @@ const controller = createController({
   getById: todosDAL.getTodoById,
   create: todosDAL.createTodo,
   update: todosDAL.updateTodo,
-  delete: todosDAL.deleteTodo
+  remove: todosDAL.deleteTodo
 }, 'Todo');
 
 export const getAllTodos = controller.getAll;
 export const getTodoById = controller.getById;
 export const createTodo = controller.create;
 export const updateTodo = controller.update;
-export const deleteTodo = controller.delete;
+export const deleteTodo = controller.remove;

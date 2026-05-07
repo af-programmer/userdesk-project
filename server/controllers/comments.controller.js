@@ -6,7 +6,7 @@ const controller = createController({
   getById: commentsDAL.getCommentById,
   create: commentsDAL.createComment,
   update: commentsDAL.updateComment,
-  delete: commentsDAL.deleteComment
+  remove: commentsDAL.deleteComment
 }, 'Comment');
 
 export const getCommentsByPost = asyncHandler(async (req, res) => {
@@ -16,4 +16,4 @@ export const getCommentsByPost = asyncHandler(async (req, res) => {
 
 export const createComment = controller.create;
 export const updateComment = controller.update;
-export const deleteComment = controller.delete;
+export const deleteComment = controller.remove;

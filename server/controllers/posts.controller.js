@@ -6,7 +6,7 @@ const controller = createController({
   getById: postsDAL.getPostById,
   create: postsDAL.createPost,
   update: postsDAL.updatePost,
-  delete: postsDAL.deletePost
+  remove: postsDAL.deletePost
 }, 'Post', {
   customGetAll: asyncHandler(async (req, res) => {
     const posts = await postsDAL.getAllPosts(req.query.include === 'comments');
@@ -18,4 +18,4 @@ export const getAllPosts = controller.getAll;
 export const getPostById = controller.getById;
 export const createPost = controller.create;
 export const updatePost = controller.update;
-export const deletePost = controller.delete;
+export const deletePost = controller.remove;
