@@ -1,6 +1,7 @@
 import asyncHandler from './asyncHandler.js';
 
 export const createController = (methods, entityName, options = {}) => ({
+  
   getAll: options.customGetAll || asyncHandler(async (req, res) => {
     const items = await methods.getByUserId(req.user.id, req.query);
     res.json(items);

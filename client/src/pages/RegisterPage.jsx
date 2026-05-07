@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { register, login } from '../services/api';
+import '../styles/Auth.css';
 import { useAuth } from '../hooks/AuthContext.jsx';
 
 function RegisterPage() {
@@ -40,7 +41,7 @@ function RegisterPage() {
           {error && <p className="error-msg">{error}</p>}
           <button type="submit">Register</button>
         </form>
-        <Link to="/login" style={{ color: 'white' }}>Already have an account? Login</Link>
+        <Link to="/login" className="auth-nav-link">Already have an account? Login</Link>
       </div>
     </div>
   );

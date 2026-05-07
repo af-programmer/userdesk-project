@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../services/api';
+import '../styles/Auth.css';
 import { useAuth } from '../hooks/AuthContext.jsx';
 
 function LoginPage() {
@@ -45,7 +46,7 @@ function LoginPage() {
           {error && <p className="error-msg">{error}</p>}
           <button type="submit">Login</button>
         </form>
-        <Link to="/register" style={{ color: 'white' }}>Don't have an account? Register</Link>
+        <Link to="/register" className="auth-nav-link">Don't have an account? Register</Link>
       </div>
     </div>
   );

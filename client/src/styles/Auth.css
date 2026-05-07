@@ -95,11 +95,12 @@
   text-align: center;
 }
 
-.success-message {
-  background: #d4edda;
-  color: #155724;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  text-align: center;
+.auth-nav-link {
+  color: rgba(57, 255, 20);
+  font-size: 0.875em;
+  text-decoration: none;
+}
+
+.auth-nav-link:hover {
+  text-decoration: underline;
 }
