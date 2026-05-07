@@ -7,6 +7,7 @@ import todosRoutes from './routes/todos.routes.js';
 import postsRoutes from './routes/posts.routes.js';
 import commentsRoutes from './routes/comments.routes.js';
 import logger from './middleware/logger.middleware.js';
+import errorHandler from './middleware/errorHandler.middleware.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +20,8 @@ app.use('/api/users', usersRoutes);
 app.use('/api/todos', todosRoutes);
 app.use('/api/posts', postsRoutes);
 app.use('/api/comments', commentsRoutes);
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -1,4 +1,5 @@
 import pool from '../db.js';
+import { getById, deleteRecord, updateRecord, createRecord } from './base.dal.js';
 
 export const getTodosByUserId = async (userId, filters = {}) => {
   let query = 'SELECT * FROM todos WHERE user_id = ?';
@@ -13,28 +14,18 @@ export const getTodosByUserId = async (userId, filters = {}) => {
 };
 
 export const getTodoById = async (id) => {
-  const [rows] = await pool.query('SELECT * FROM todos WHERE id = ?', [id]);
-  return rows[0];
+  return getById('todos', id);
 };
 
 export const createTodo = async ({ user_id, title }) => {
-  const [result] = await pool.query(
-    'INSERT INTO todos (user_id, title) VALUES (?, ?)',
-    [user_id, title]
-  );
-  return result.insertId;
+  return createRecord('todos', { user_id, title });
 };
 
 export const updateTodo = async (id, { title, completed }) => {
-  const [result] = await pool.query(
-    'UPDATE todos SET title = COALESCE(?, title), completed = COALESCE(?, completed) WHERE id = ?',
-    [title, completed, id]
-  );
-  return result.affectedRows;
+  return updateRecord('todos', id, { title, completed });
 };
 
 export const deleteTodo = async (id) => {
-  const [result] = await pool.query('DELETE FROM todos WHERE id = ?', [id]);
-  return result.affectedRows;
+  return deleteRecord('todos', id);
 };
   

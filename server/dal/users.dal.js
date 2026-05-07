@@ -1,4 +1,5 @@
 import pool from '../db.js';
+import { getById } from './base.dal.js';
 
 export const createUser = async ({ username, email, password }) => {
   const connection = await pool.getConnection();

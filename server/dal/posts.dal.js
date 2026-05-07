@@ -1,4 +1,5 @@
 import pool from '../db.js';
+import { getById, deleteRecord, updateRecord, createRecord } from './base.dal.js';
 
 export const getAllPosts = async (includeComments = false) => {
   const [posts] = await pool.query(
@@ -24,22 +25,13 @@ export const getPostById = async (id) => {
 };
 
 export const createPost = async ({ user_id, title, content }) => {
-  const [result] = await pool.query(
-    'INSERT INTO posts (user_id, title, content) VALUES (?, ?, ?)',
-    [user_id, title, content]
-  );
-  return result.insertId;
+  return createRecord('posts', { user_id, title, content });
 };
 
 export const updatePost = async (id, { title, content }) => {
-  const [result] = await pool.query(
-    'UPDATE posts SET title = COALESCE(?, title), content = COALESCE(?, content) WHERE id = ?',
-    [title, content, id]
-  );
-  return result.affectedRows;
+  return updateRecord('posts', id, { title, content });
 };
 
 export const deletePost = async (id) => {
-  const [result] = await pool.query('DELETE FROM posts WHERE id = ?', [id]);
-  return result.affectedRows;
+  return deleteRecord('posts', id);
 };
