@@ -3,7 +3,7 @@ import { getById, deleteRecord, updateRecord, createRecord } from './base.dal.js
 
 export const getCommentsByPostId = async (postId) => {
   const [rows] = await pool.query(
-    'SELECT comments.*, users.username FROM comments JOIN users ON comments.user_id = users.id WHERE comments.post_id = ? ORDER BY comments.created_at ASC',
+    'SELECT comments.*, users.username FROM comments JOIN users ON comments.user_id = users.id WHERE comments.post_id = ? AND comments.is_deleted = 0 ORDER BY comments.created_at ASC',
     [postId]
   );
   return rows;

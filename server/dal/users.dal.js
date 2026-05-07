@@ -34,7 +34,7 @@ export const getUserByUsername = async (username) => {
 
 export const getUserById = async (id) => {
   const [rows] = await pool.query(
-    'SELECT id, username, email, created_at FROM users WHERE id = ?',
+    'SELECT id, username, email, created_at FROM users WHERE id = ? AND is_deleted = 0',
     [id]
   );
   if (!rows.length) return null;
@@ -43,6 +43,6 @@ export const getUserById = async (id) => {
 
 //not shooroe if this route is needed or not, but just in case we will add it, and only admin can access it
 export const getAllUsers = async () => {
-  const [rows] = await pool.query('SELECT id, username, email, created_at FROM users');
+  const [rows] = await pool.query('SELECT id, username, email, created_at FROM users WHERE is_deleted = 0');
   return rows;
 };

@@ -3,12 +3,12 @@ import { getById, deleteRecord, updateRecord, createRecord } from './base.dal.js
 
 export const getAllPosts = async (includeComments = false) => {
   const [posts] = await pool.query(
-    'SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id ORDER BY posts.id'
+    'SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.is_deleted = 0 ORDER BY posts.id'
   );
   if (!includeComments) return posts;
   for (const post of posts) {
     const [comments] = await pool.query(
-      'SELECT comments.*, users.username FROM comments JOIN users ON comments.user_id = users.id WHERE post_id = ? ORDER BY comments.id',
+      'SELECT comments.*, users.username FROM comments JOIN users ON comments.user_id = users.id WHERE post_id = ? AND comments.is_deleted = 0 ORDER BY comments.id',
       [post.id]
     );
     post.comments = comments;
@@ -18,7 +18,7 @@ export const getAllPosts = async (includeComments = false) => {
 
 export const getPostById = async (id) => {
   const [rows] = await pool.query(
-    'SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.id = ?',
+    'SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.id = ? AND posts.is_deleted = 0',
     [id]
   );
   return rows[0];

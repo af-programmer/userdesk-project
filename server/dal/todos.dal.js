@@ -2,7 +2,7 @@ import pool from '../db.js';
 import { getById, deleteRecord, updateRecord, createRecord } from './base.dal.js';
 
 export const getTodosByUserId = async (userId, filters = {}) => {
-  let query = 'SELECT * FROM todos WHERE user_id = ?';
+  let query = 'SELECT * FROM todos WHERE user_id = ? AND is_deleted = 0';
   const params = [userId];
   if (filters.completed !== undefined) {
     query += ' AND completed = ?';
