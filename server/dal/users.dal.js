@@ -1,13 +1,13 @@
 import pool from '../db.js';
 import { getById } from './base.dal.js';
 
-export const createUser = async ({ username, email, password }) => {
+export const createUser = async ({ username, email, phone, password }) => {
   const connection = await pool.getConnection();
   try {
     await connection.beginTransaction();
     const [result] = await connection.query(
-      'INSERT INTO users (username, email) VALUES (?, ?)',
-      [username, email]
+      'INSERT INTO users (username, email, phone) VALUES (?, ?, ?)',
+      [username, email, phone || null]
     );
     await connection.query(
       'INSERT INTO passwords (user_id, password_hash) VALUES (?, ?)',

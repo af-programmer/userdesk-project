@@ -88,6 +88,8 @@ p, small {
 /* INPUTS */
 input[type="text"],
 input[type="password"],
+input[type="email"],
+input[type="tel"],
 textarea {
   width: 100%;
   padding: 10px 14px;
@@ -103,6 +105,8 @@ textarea {
 
 input[type="text"]:focus,
 input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
 textarea:focus {
   border-color: var(--primary);
 }

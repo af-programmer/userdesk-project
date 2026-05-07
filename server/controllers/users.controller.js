@@ -4,10 +4,17 @@ import * as usersDAL from '../dal/users.dal.js';
 import asyncHandler from '../utils/asyncHandler.js';
 
 export const register = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const userId = await usersDAL.createUser({ username, email, password: hashedPassword });
-  res.status(201).json({ id: userId, message: 'User created successfully' });
+  const { username, email, phone, password } = req.body;
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const userId = await usersDAL.createUser({ username, email, phone, password: hashedPassword });
+    res.status(201).json({ id: userId, message: 'User created successfully' });
+  } catch (err) {
+    if (err.code === 'ER_DUP_ENTRY') {
+      return res.status(409).json({ error: 'Username or email already exists' });
+    }
+    throw err;
+  }
 });
 
 export const login = asyncHandler(async (req, res) => {

@@ -6,7 +6,7 @@ export const getTodosByUserId = async (userId, filters = {}) => {
   const params = [userId];
   if (filters.completed !== undefined) {
     query += ' AND completed = ?';
-    params.push(filters.completed);
+    params.push(filters.completed === 'true' ? 1 : 0);
   }
   query += ' ORDER BY id';
   const [rows] = await pool.query(query, params);

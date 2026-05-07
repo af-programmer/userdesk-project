@@ -10,11 +10,15 @@ const fetchAPI = async (url, options = {}) => {
     ...options.headers,
   };
   const response = await fetch(`${API_URL}${url}`, { ...options, headers });
-  if (!response.ok) throw new Error('Request failed');
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.error || 'Request failed');
+  }
   return response.json();
 };
 
 export const login = (data) => fetchAPI('/users/login', { method: 'POST', body: JSON.stringify(data) });
+export const register = (data) => fetchAPI('/users/register', { method: 'POST', body: JSON.stringify(data), headers: { Authorization: '' } });
 
 export const getTodos = (params = {}) => {
   const query = new URLSearchParams(params).toString();

@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './hooks/AuthContext.jsx';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import AppPage from './pages/AppPage';
 import TodosPage from './pages/TodosPage';
 import PostsPage from './pages/PostsPage';
@@ -16,6 +17,7 @@ function App() {
       {user && <NavBar username={username} />}
       <Routes>
         <Route path="/login" element={!user ? <LoginPage /> : <Navigate to={`/users/${username}/app`} />} />
+        <Route path="/register" element={!user ? <RegisterPage /> : <Navigate to={`/users/${username}/app`} />} />
         <Route path="/users/:username/app" element={user ? <AppPage /> : <Navigate to="/login" />} />
         <Route path="/users/:username/todos" element={user ? <TodosPage /> : <Navigate to="/login" />} />
         <Route path="/users/:username/posts" element={user ? <PostsPage /> : <Navigate to="/login" />} />
