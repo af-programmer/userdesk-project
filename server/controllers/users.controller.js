@@ -5,16 +5,9 @@ import asyncHandler from '../utils/asyncHandler.js';
 
 export const register = asyncHandler(async (req, res) => {
   const { username, email, phone, password } = req.body;
-  try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const userId = await usersDAL.createUser({ username, email, phone, password: hashedPassword });
-    res.status(201).json({ id: userId, message: 'User created successfully' });
-  } catch (err) {
-    if (err.code === 'ER_DUP_ENTRY') {
-      return res.status(409).json({ error: 'Username or email already exists' });
-    }
-    throw err;
-  }
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const userId = await usersDAL.createUser({ username, email, phone, password: hashedPassword });
+  res.status(201).json({ id: userId, message: 'User created successfully' });
 });
 
 export const login = asyncHandler(async (req, res) => {
@@ -32,7 +25,7 @@ export const getUserById = asyncHandler(async (req, res) => {
   if (!user) return res.status(404).json({ error: 'User not found' });
   res.json(user);
 });
-// not shooroe if this route is needed or not, but just in case we will add it, and only admin can access it
+// not sure if this route is needed or not, but just in case we will add it, and only admin can access it
 export const getAllUsers = asyncHandler(async (req, res) => {
   const users = await usersDAL.getAllUsers();
   res.json(users);
