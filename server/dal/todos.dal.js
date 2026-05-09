@@ -1,5 +1,5 @@
 import pool from '../db.js';
-import { getById, deleteRecord, updateRecord, createRecord } from './base.dal.js';
+import { getById, hardDeleteRecord, updateRecord, createRecord } from './base.dal.js';
 
 export const getTodosByUserId = async (userId, filters = {}) => {
   let query = 'SELECT * FROM todos WHERE user_id = ? AND is_deleted = 0';
@@ -26,6 +26,6 @@ export const updateTodo = async (id, { title, completed }) => {
 };
 
 export const deleteTodo = async (id) => {
-  return deleteRecord('todos', id);
+  return hardDeleteRecord('todos', id);
 };
   

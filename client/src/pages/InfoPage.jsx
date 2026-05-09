@@ -7,7 +7,7 @@ function InfoPage() {
       <div className="info-card">
         <div className="info-row"><strong>Username</strong><span>{user?.username}</span></div>
         <div className="info-row"><strong>Email</strong><span>{user?.email}</span></div>
-        <div className="info-row"><strong>ID</strong><span>{user?.id}</span></div>
+        {user?.phone && <div className="info-row"><strong>Phone</strong><span>{user.phone}</span></div>}
       </div>
     </div>
   );

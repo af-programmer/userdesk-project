@@ -10,6 +10,11 @@ export const deleteRecord = async (tableName, id) => {
   return result.affectedRows;
 };
 
+export const hardDeleteRecord = async (tableName, id) => {
+  const [result] = await pool.query('DELETE FROM ?? WHERE id = ?', [tableName, id]);
+  return result.affectedRows;
+};
+
 export const restoreRecord = async (tableName, id) => {
   const [result] = await pool.query('UPDATE ?? SET is_deleted = 0 WHERE id = ?', [tableName, id]);
   return result.affectedRows;
